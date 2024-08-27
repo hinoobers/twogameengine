@@ -15,17 +15,25 @@ public class TestGame {
     public static Player player = new Player(50, 50);
 
     public static void main(String[] args) {
-        Window window = new Window("Test Game", 800, 600);
+        Window window = new Window("Dropper Test Game", 800, 600);
         window.attachRenderer(graphics -> {
             player.render(graphics);
         });
         UIScreen screen = new UIScreen(0, 0, 800, 600, Color.PINK.getRGB());
-        screen.addElement(new UIButton("Click me!", 50, 50, 100, 50, Color.GREEN.getRGB()));
+        UIButton startButton = new UIButton("Click me to start!", 300, 300, 100, 50, Color.GREEN.getRGB());
+        startButton.setClickListener(new UIButton.ClickListener() {
+            @Override
+            public void onClick() {
+                screen.destroy();
+            }
+        });
+        screen.addElement(startButton);
         window.attachRenderer(screen);
         window.attachListener(new PreRenderListener() {
             @Override
             public void onPreRender() {
                 // Called before the rendering is done
+                player.move(0, 1);
             }
         });
         window.attachListener(new KeyListener() {

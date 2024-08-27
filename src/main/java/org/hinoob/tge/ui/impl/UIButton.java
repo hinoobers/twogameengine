@@ -10,12 +10,17 @@ public class UIButton extends UIElement {
 
     private String text;
     private int textColor;
+    private ClickListener clickListener;
 
     public UIButton(String text, int x, int y, int width, int height, int color) {
         super(x, y, width, height, color);
 
         this.text = text;
         this.textColor = Color.BLACK.getRGB();
+    }
+
+    public void setClickListener(ClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -29,8 +34,10 @@ public class UIButton extends UIElement {
 
     @Override
     public void onMouseClick(int x, int y, int button) {
-        System.out.println("Button clicked!");
+        clickListener.onClick();
+    }
 
-        this.color = new Color(new Random().nextInt(255), 0, 0).getRGB();
+    public interface ClickListener {
+        void onClick();
     }
 }
