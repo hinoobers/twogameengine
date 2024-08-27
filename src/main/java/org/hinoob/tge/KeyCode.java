@@ -11,6 +11,7 @@ public enum KeyCode {
     KEY_R(82),
     KEY_F(70),
     KEY_G(71),
+    KEY_J(74),
     KEY_ENTER(10),
     KEY_ESC(27),
     KEY_SHIFT(16),

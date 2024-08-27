@@ -11,7 +11,7 @@ public class UIScreen implements Renderer {
 
     private int x, y, width, height, color;
     private final List<UIElement> elements = new ArrayList<>();
-    private boolean destroyed = false;
+    private boolean destroyed = false, hidden = false;
 
     public UIScreen(int x, int y, int width, int height, int color) {
         this.x = x;
@@ -25,8 +25,12 @@ public class UIScreen implements Renderer {
         elements.add(element);
     }
 
-    public void destroy() {
-        destroyed = true;
+    public void destroy(boolean negative) {
+        destroyed = !negative;
+    }
+
+    public void hide(boolean negative) {
+        hidden = !negative;
     }
 
     @Override
@@ -46,6 +50,11 @@ public class UIScreen implements Renderer {
                 element.onMouseClick(x, y, button);
             }
         }
+    }
+
+    @Override
+    public boolean shouldRender() {
+        return !hidden;
     }
 
     @Override

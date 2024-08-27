@@ -9,9 +9,14 @@ public class Player {
         this.y = y;
     }
 
-    public void move(int x, int y){
-        this.x += x;
-        this.y += y;
+    public void move(int x, int y, boolean relative){
+        if(relative){
+            this.x += x;
+            this.y += y;
+        } else {
+            this.x = x;
+            this.y = y;
+        }
     }
 
     public void render(Graphics graphics) {
