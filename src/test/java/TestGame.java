@@ -6,6 +6,8 @@ import org.hinoob.tge.event.MouseListener;
 import org.hinoob.tge.event.PreRenderListener;
 import org.hinoob.tge.ui.UIScreen;
 import org.hinoob.tge.ui.impl.UIButton;
+import org.hinoob.tge.util.CollisionUtils;
+import org.hinoob.tge.util.DimensionBox;
 
 import java.awt.*;
 import java.security.Key;
@@ -43,8 +45,19 @@ public class TestGame {
             @Override
             public void onPreRender() {
                 // Called before the rendering is done
-                if(isGameActive)
-                    player.move(0,1);
+                if(isGameActive) {
+                    player.move(0, 1);
+                    DimensionBox playerDimension = DimensionBox.of(player.x, player.y, 32,32);
+                    for (ObstacleRow row : obstacleRows) {
+                        for (int i = 0; i < row.spaces.size(); i++) {
+                            DimensionBox DIme = DimensionBox.of(row.spaces.get(i) * 15, row.height, 15, 15);
+                            if(CollisionUtils.isColliding(playerDimension, DIme)) {
+                                System.out.println("Collided!");
+                            }
+                        }
+                    }
+
+                }
             }
         });
         window.attachListener(new KeyListener() {

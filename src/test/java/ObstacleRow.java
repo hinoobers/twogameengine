@@ -7,15 +7,18 @@ import java.util.List;
 public class ObstacleRow implements Renderer {
 
     private int width;
-    private int height = 5;
-    private List<Integer> spaces = new ArrayList<>();
+    public int height = 5;
+    public List<Integer> spaces = new ArrayList<>();
 
     public ObstacleRow(int width, int height) {
         this.width = width;
         this.height = height;
-        int spaceCount = (int) (Math.random() * 3) + 1;
-        for (int i = 0; i < spaceCount; i++) {
-            spaces.add((int) (Math.random() * width));
+
+
+        for(int i = 1; i < 5; i++) {
+            int pixel = (int) ((Math.random() * width)/15);
+            spaces.add(pixel);
+            spaces.add(pixel + 1);
         }
     }
 
@@ -25,8 +28,14 @@ public class ObstacleRow implements Renderer {
 
         for (int i = 0; i < width; i++) {
             if (!spaces.contains(i)) {
-                graphics.fillRect(i, height, width, 15);
+                graphics.fillRect(i * 15, height, 15, 15);
             }
+        }
+
+        graphics.setColor(Color.WHITE);
+
+        for (int space : spaces) {
+            graphics.clearRect(space * 15, height, 15, 15);
         }
     }
 }
