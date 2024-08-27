@@ -27,9 +27,9 @@ public class TestGame {
             @Override
             public void onKeyPress(KeyCode key) {
                 if(key == KeyCode.KEY_A) {
-                    player.move(-1, 0);
+                    player.move(-2, 0);
                 } else if(key == KeyCode.KEY_D) {
-                    player.move(1, 0);
+                    player.move(2, 0);
                 }
             }
 

@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Iterator;
 
 public class GamePanel extends JPanel{
 
@@ -93,8 +94,19 @@ public class GamePanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        java.util.List<Renderer> toRemove = new java.util.ArrayList<>();
         for(Renderer renderer : window.getRenderers()) {
-            renderer.render(g);
+            if(renderer.shouldDestroy()) {
+                toRemove.add(renderer);
+                continue;
+            }
+
+            if(renderer.shouldRender())
+                renderer.render(g);
+        }
+
+        for (Renderer renderer : toRemove) {
+            window.getRenderers().remove(renderer);
         }
     }
 }
