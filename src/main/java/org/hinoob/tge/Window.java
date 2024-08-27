@@ -1,9 +1,12 @@
 package org.hinoob.tge;
 
+import org.hinoob.tge.event.GameClosedListener;
 import org.hinoob.tge.event.KeyListener;
 import org.hinoob.tge.event.Listener;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +64,14 @@ public class Window {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(this.resizable);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+
+                getListeners(GameClosedListener.class).forEach(listener -> ((GameClosedListener) listener).onGameClosed());
+            }
+        });
         frame.setVisible(true);
 
     }
