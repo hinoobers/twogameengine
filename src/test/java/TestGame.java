@@ -2,6 +2,7 @@ import org.hinoob.tge.KeyCode;
 import org.hinoob.tge.Renderer;
 import org.hinoob.tge.Window;
 import org.hinoob.tge.event.KeyListener;
+import org.hinoob.tge.event.MouseListener;
 import org.hinoob.tge.event.PreRenderListener;
 
 import java.awt.*;
@@ -36,6 +37,22 @@ public class TestGame {
             @Override
             public void onKeyPressRaw(int key) {
 
+            }
+        });
+        window.attachListener(new MouseListener() {
+            @Override
+            public void onPress(int mouseX, int mouseY, int button) {
+                System.out.println("Pressed at " + mouseX + ", " + mouseY + " with button " + button);
+            }
+
+            @Override
+            public void onClick(int mouseX, int mouseY, int button) {
+                System.out.println("Clicked at " + mouseX + ", " + mouseY + " with button " + button);
+            }
+
+            @Override
+            public void onRelease(int mouseX, int mouseY, int button) {
+                System.out.println("Released at " + mouseX + ", " + mouseY + " with button " + button);
             }
         });
 

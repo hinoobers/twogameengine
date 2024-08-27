@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class GamePanel extends JPanel{
 
@@ -34,6 +36,44 @@ public class GamePanel extends JPanel{
 
             @Override
             public void keyReleased(KeyEvent e) {
+
+            }
+        });
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                for(Listener listener : window.getListeners(org.hinoob.tge.event.MouseListener.class)) {
+                    org.hinoob.tge.event.MouseListener mouseListener = (org.hinoob.tge.event.MouseListener) listener;
+
+                    mouseListener.onClick(e.getX(), e.getY(), e.getButton());
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                for(Listener listener : window.getListeners(org.hinoob.tge.event.MouseListener.class)) {
+                    org.hinoob.tge.event.MouseListener mouseListener = (org.hinoob.tge.event.MouseListener) listener;
+
+                    mouseListener.onPress(e.getX(), e.getY(), e.getButton());
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                for(Listener listener : window.getListeners(org.hinoob.tge.event.MouseListener.class)) {
+                    org.hinoob.tge.event.MouseListener mouseListener = (org.hinoob.tge.event.MouseListener) listener;
+
+                    mouseListener.onRelease(e.getX(), e.getY(), e.getButton());
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
 
             }
         });
