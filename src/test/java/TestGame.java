@@ -17,6 +17,9 @@ public class TestGame {
             graphics.setColor(Color.BLUE);
             graphics.fillRect(100, 100, 100, 100);
         });
+
+        window.getSoundPlayer().loadSound("TEST", "test.wav");
+        window.getSoundPlayer().loopSound("TEST");
         window.display();
     }
 }

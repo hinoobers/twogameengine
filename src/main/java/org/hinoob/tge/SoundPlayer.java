@@ -1,9 +1,7 @@
 package org.hinoob.tge;
 
 import javax.sound.sampled.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +17,11 @@ public class SoundPlayer {
 
     public void loadSound(String PATH, String location) {
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new FileInputStream(location));
+            AudioInputStream audioInputStream;
+            audioInputStream = AudioSystem.getAudioInputStream(new File(location));
+
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(audioInputStream);
+            audioInputStream = new AudioInputStream(bufferedInputStream, audioInputStream.getFormat(), audioInputStream.getFrameLength());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             sounds.put(PATH, clip);
