@@ -1,6 +1,7 @@
 package org.hinoob.tge.ui;
 
 import org.hinoob.tge.Renderer;
+import org.hinoob.tge.util.UIUtils;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -36,7 +37,9 @@ public class UIScreen implements Renderer {
     @Override
     public void onMouseClick(int x, int y, int button) {
         for(UIElement element : elements) {
-            element.onMouseClick(x, y, button);
+            if(UIUtils.isOver(element.getX(), element.getY(), element.getWidth(), element.getHeight(), x, y)) {
+                element.onMouseClick(x, y, button);
+            }
         }
     }
 }

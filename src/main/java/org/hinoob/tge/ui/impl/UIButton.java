@@ -4,6 +4,7 @@ import org.hinoob.tge.ui.UIElement;
 import org.hinoob.tge.util.UIUtils;
 
 import java.awt.*;
+import java.util.Random;
 
 public class UIButton extends UIElement {
 
@@ -28,8 +29,8 @@ public class UIButton extends UIElement {
 
     @Override
     public void onMouseClick(int x, int y, int button) {
-        if(UIUtils.isOver(this.x, this.y, this.width, this.height, x, y)) {
-            System.out.println("Button clicked!");
-        }
+        System.out.println("Button clicked!");
+
+        this.color = new Color(new Random().nextInt(255), 0, 0).getRGB();
     }
 }

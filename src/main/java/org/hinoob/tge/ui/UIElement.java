@@ -14,5 +14,25 @@ public abstract class UIElement implements Renderer {
         this.color = color;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
 
 }
