@@ -1,7 +1,11 @@
+import org.hinoob.tge.KeyCode;
 import org.hinoob.tge.Renderer;
 import org.hinoob.tge.Window;
+import org.hinoob.tge.event.KeyListener;
+import org.hinoob.tge.event.PreRenderListener;
 
 import java.awt.*;
+import java.security.Key;
 
 public class TestGame {
 
@@ -17,9 +21,26 @@ public class TestGame {
             graphics.setColor(Color.BLUE);
             graphics.fillRect(100, 100, 100, 100);
         });
+        window.attachListener(new PreRenderListener() {
+            @Override
+            public void onPreRender() {
+                // Called before the rendering is done
+            }
+        });
+        window.attachListener(new KeyListener() {
+            @Override
+            public void onKeyPress(KeyCode key) {
+                System.out.println(key);
+            }
 
-        window.getSoundPlayer().loadSound("TEST", "test.wav");
-        window.getSoundPlayer().loopSound("TEST");
+            @Override
+            public void onKeyPressRaw(int key) {
+
+            }
+        });
+
+        window.getSoundPlayer().loadSound("TEST", "test.wav"); // Load to memory
+        window.getSoundPlayer().loopSound("TEST"); // Loop it
         window.display();
     }
 }

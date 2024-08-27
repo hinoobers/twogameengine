@@ -1,7 +1,9 @@
 package org.hinoob.tge;
 
+import org.hinoob.tge.event.KeyListener;
+import org.hinoob.tge.event.Listener;
+
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class Window {
     private JFrame frame;
 
     private final List<Renderer> attachedRenderers = new ArrayList<>();
+    private final List<Listener> attachedListeners = new ArrayList<>();
     private final SoundPlayer soundPlayer = new SoundPlayer(this);
 
     public Window(String title, int width, int height) {
@@ -32,8 +35,16 @@ public class Window {
         attachedRenderers.add(renderer);
     }
 
+    public void attachListener(Listener listener) {
+        attachedListeners.add(listener);
+    }
+
     public List<Renderer> getRenderers() {
         return attachedRenderers;
+    }
+
+    public List<Listener> getListeners(Class<?> type) {
+        return attachedListeners.stream().filter(type::isInstance).toList();
     }
 
     public SoundPlayer getSoundPlayer() {
