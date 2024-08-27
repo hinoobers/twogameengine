@@ -4,6 +4,8 @@ import org.hinoob.tge.Window;
 import org.hinoob.tge.event.KeyListener;
 import org.hinoob.tge.event.MouseListener;
 import org.hinoob.tge.event.PreRenderListener;
+import org.hinoob.tge.ui.UIScreen;
+import org.hinoob.tge.ui.impl.UIButton;
 
 import java.awt.*;
 import java.security.Key;
@@ -17,6 +19,9 @@ public class TestGame {
         window.attachRenderer(graphics -> {
             player.render(graphics);
         });
+        UIScreen screen = new UIScreen(0, 0, 800, 600, Color.PINK.getRGB());
+        screen.addElement(new UIButton("Click me!", 50, 50, 100, 50, Color.GREEN.getRGB()));
+        window.attachRenderer(screen);
         window.attachListener(new PreRenderListener() {
             @Override
             public void onPreRender() {
@@ -36,22 +41,6 @@ public class TestGame {
             @Override
             public void onKeyPressRaw(int key) {
 
-            }
-        });
-        window.attachListener(new MouseListener() {
-            @Override
-            public void onPress(int mouseX, int mouseY, int button) {
-                System.out.println("Pressed at " + mouseX + ", " + mouseY + " with button " + button);
-            }
-
-            @Override
-            public void onClick(int mouseX, int mouseY, int button) {
-                System.out.println("Clicked at " + mouseX + ", " + mouseY + " with button " + button);
-            }
-
-            @Override
-            public void onRelease(int mouseX, int mouseY, int button) {
-                System.out.println("Released at " + mouseX + ", " + mouseY + " with button " + button);
             }
         });
 

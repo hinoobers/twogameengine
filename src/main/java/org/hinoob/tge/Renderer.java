@@ -5,6 +5,11 @@ import java.awt.*;
 public interface Renderer {
 
     void render(Graphics graphics);
+
+    default void onMouseClick(int x, int y, int button) {
+
+    }
+
     default boolean shouldRender() {
         return true;
     }

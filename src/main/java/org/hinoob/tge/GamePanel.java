@@ -48,6 +48,12 @@ public class GamePanel extends JPanel{
 
                     mouseListener.onClick(e.getX(), e.getY(), e.getButton());
                 }
+
+                for(Renderer renderer : window.getRenderers()) {
+                    if(renderer.shouldRender()) {
+                        renderer.onMouseClick(e.getX(), e.getY(), e.getButton());
+                    }
+                }
             }
 
             @Override
