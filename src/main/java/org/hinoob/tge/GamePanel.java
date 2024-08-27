@@ -11,8 +11,8 @@ import java.awt.event.MouseListener;
 
 public class GamePanel extends JPanel{
 
-    private Window window;
-    private Timer timer;
+    private final Window window;
+    private final Timer timer;
 
     public GamePanel(Window window) {
         this.window = window;
