@@ -9,15 +9,24 @@ import org.hinoob.tge.ui.impl.UIButton;
 
 import java.awt.*;
 import java.security.Key;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestGame {
 
     public static Player player = new Player(50, 50);
+    public static List<ObstacleRow> obstacleRows = new ArrayList<>();
+    private static boolean isGameActive = false;
 
     public static void main(String[] args) {
         Window window = new Window("Dropper Test Game", 800, 600);
+        obstacleRows.add(new ObstacleRow(800, 400));
         window.attachRenderer(graphics -> {
             player.render(graphics);
+
+            for (ObstacleRow row : obstacleRows) {
+                row.render(graphics);
+            }
         });
         UIScreen screen = new UIScreen(0, 0, 800, 600, Color.PINK.getRGB());
         UIButton startButton = new UIButton("Click me to start!", 300, 300, 100, 50, Color.GREEN.getRGB());
@@ -25,6 +34,7 @@ public class TestGame {
             @Override
             public void onClick() {
                 screen.destroy();
+                isGameActive = true;
             }
         });
         screen.addElement(startButton);
@@ -33,7 +43,8 @@ public class TestGame {
             @Override
             public void onPreRender() {
                 // Called before the rendering is done
-                player.move(0, 1);
+                if(isGameActive)
+                    player.move(0,1);
             }
         });
         window.attachListener(new KeyListener() {
