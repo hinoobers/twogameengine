@@ -10,8 +10,15 @@ public class TGEClient {
     private Socket socket;
 
     public TGEClient(Socket socket) {
-        this.id = id;
         this.socket = socket;
+    }
+
+    public TGEClient(String ip, int port) {
+        try {
+            socket = new Socket(ip, port);
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public InputStream getInputStream() {
@@ -36,6 +43,12 @@ public class TGEClient {
     }
 
     public void sendBytes(byte[] data) {
-
+        System.out.println("Sending bytes " + data.length);
+        try {
+            socket.getOutputStream().write(data);
+            socket.getOutputStream().flush();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
 }

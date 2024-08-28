@@ -1,47 +1,64 @@
 package org.hinoob.tge;
 
+import java.nio.charset.StandardCharsets;
+
 public class ByteWriter {
 
     private byte[] bytes;
+    private int currentPosition;
 
     public ByteWriter(int size) {
         bytes = new byte[size];
+        currentPosition = 0;
     }
 
-    public void ensureCapacity(int size) {
-        if (bytes.length < size) {
-            byte[] newBytes = new byte[size];
-            System.arraycopy(bytes, 0, newBytes, 0, bytes.length);
+    public void ensureCapacity(int additionalSize) {
+        int requiredCapacity = currentPosition + additionalSize;
+        if (bytes.length < requiredCapacity) {
+            byte[] newBytes = new byte[requiredCapacity];
+            System.arraycopy(bytes, 0, newBytes, 0, currentPosition);
             bytes = newBytes;
         }
     }
 
-    public void writeInt(int value) {
-        ensureCapacity(bytes.length + 4);
-        bytes[bytes.length] = (byte) (value >> 24);
-        bytes[bytes.length + 1] = (byte) (value >> 16);
-        bytes[bytes.length + 2] = (byte) (value >> 8);
-        bytes[bytes.length + 3] = (byte) value;
+    public ByteWriter writeInt(int value) {
+        ensureCapacity(4);
+        bytes[currentPosition] = (byte) (value >> 24);
+        bytes[currentPosition + 1] = (byte) (value >> 16);
+        bytes[currentPosition + 2] = (byte) (value >> 8);
+        bytes[currentPosition + 3] = (byte) value;
+        currentPosition += 4;
+        return this;
     }
 
-    public void writeByte(byte value) {
-        ensureCapacity(bytes.length + 1);
-        bytes[bytes.length] = value;
+    public ByteWriter writeByte(byte value) {
+        ensureCapacity(1);
+        bytes[currentPosition] = value;
+        currentPosition++;
+        return this;
     }
 
-    public void writeBytes(byte[] value) {
-        ensureCapacity(bytes.length + value.length);
-        System.arraycopy(value, 0, bytes, bytes.length, value.length);
+    public ByteWriter writeBytes(byte[] value) {
+        ensureCapacity(value.length);
+        System.arraycopy(value, 0, bytes, currentPosition, value.length);
+        currentPosition += value.length;
+        return this;
     }
 
-    public void writeBoolean(boolean value) {
-        ensureCapacity(bytes.length + 1);
-        bytes[bytes.length] = (byte) (value ? 1 : 0);
+    public ByteWriter writeBoolean(boolean value) {
+        return writeByte((byte) (value ? 1 : 0));
     }
 
-    public void writeString(String value) {
-        byte[] bytes = value.getBytes();
-        writeInt(bytes.length);
-        writeBytes(bytes);
+    public ByteWriter writeString(String value) {
+        byte[] stringBytes = value.getBytes(StandardCharsets.UTF_8);
+        writeInt(stringBytes.length);
+        writeBytes(stringBytes);
+        return this;
+    }
+
+    public byte[] getBytes() {
+        byte[] result = new byte[currentPosition];
+        System.arraycopy(bytes, 0, result, 0, currentPosition);
+        return result;
     }
 }

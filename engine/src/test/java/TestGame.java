@@ -1,6 +1,4 @@
-import org.hinoob.tge.Environment;
-import org.hinoob.tge.KeyCode;
-import org.hinoob.tge.Renderer;
+import org.hinoob.tge.*;
 import org.hinoob.tge.Window;
 import org.hinoob.tge.event.KeyListener;
 import org.hinoob.tge.event.MouseListener;
@@ -24,7 +22,28 @@ public class TestGame {
     public static List<Environment> environments = new ArrayList<>();
     private static GameState gameState = GameState.MENU;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
+        TGEServer server = new TGEServer(8080);
+        server.start(new TGEServer.ServerListener() {
+            @Override
+            public void onClientConnected(TGEClient client) {
+                System.out.println("Client connected!");
+            }
+
+            @Override
+            public void onClientDisconnected(TGEClient client) {
+                System.out.println("Client disconnected!");
+            }
+
+            @Override
+            public void onMessage(TGEClient client, ByteReader reader) {
+                System.out.println("Received message from client: " + reader.readString());
+            }
+        });
+
+        TGEClient client = new TGEClient("localhost", 8080);
+
+        client.sendBytes(new ByteWriter(0).writeString("HEllo!").getBytes());
         Environment map1 = new Environment();
         map1.addRenderer(new GoalObject(500, 500, 32, 32));
         map1.addRenderer(new ObstacleRow(500, 400, 800, 15, map1));
