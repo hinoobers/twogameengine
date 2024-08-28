@@ -14,32 +14,17 @@ import org.hinoob.tge.util.RandomUtils;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class TestGame {
 
     public static Player player;
     public static int environment = 0;
-    public static List<Environment> environments = new ArrayList<>();
     private static GameState gameState = GameState.MENU;
 
 
     public static void main(String[] args) throws Exception{
-        Environment map1 = new Environment();
-        map1.addRenderer(new GoalObject(500, 500, 32, 32));
-        map1.addRenderer(new ObstacleRow(500, 400, 800, 15, map1));
-        map1.addRenderer(new ObstacleRow(500, 300, 800, 15, map1));
-        map1.addRenderer(new ObstacleRow(500, 200, 800, 15, map1));
-
-        environments.add(map1);
-
-        Environment map2 = new Environment();
-        map2.addRenderer(new GoalObject(500, 500, 32, 32));
-        map2.addRenderer(new ObstacleRow(500, 400, 800, 15, map2));
-        map2.addRenderer(new ObstacleRow(500, 300, 800, 15, map2));
-        map2.addRenderer(new ObstacleRow(500, 200, 800, 15, map2));
-
-        environments.add(map2);
-
+        Maps.load();
         environment = 0;
 
         player = new Player(50, 50);
@@ -48,9 +33,10 @@ public class TestGame {
         window.attachRenderer(graphics -> {
             graphics.setColor(Color.WHITE);
             graphics.fillRect(0, 0, 800, 600);
+            player.setColor(RandomUtils.randomInt(0, 255), RandomUtils.randomInt(0, 255), RandomUtils.randomInt(0, 255));
             player.render(graphics);
 
-            for (Renderer renderer : environments.get(environment).getRenderers()) {
+            for (Renderer renderer : Maps.environments.get(environment).getRenderers()) {
                 renderer.render(graphics);
             }
         });
@@ -81,7 +67,7 @@ public class TestGame {
                 player.move(0, 3, true); // Gravity
                 DimensionBox playerDimension = player.getDimensionBox();
 
-                for (ObstacleRow row : environments.get(environment).getRenderers(ObstacleRow.class).stream().map(ObstacleRow.class::cast).toList()) {
+                for (ObstacleRow row : Maps.environments.get(environment).getRenderers(ObstacleRow.class).stream().map(ObstacleRow.class::cast).toList()) {
                     DimensionBox rowDimension = DimensionBox.of(0, row.getY(), 800, row.getHeight());
 
 
@@ -100,10 +86,10 @@ public class TestGame {
                     }
                 }
 
-                GoalObject goalObject = environments.get(environment).getRenderers(GoalObject.class).stream().map(GoalObject.class::cast).findFirst().orElse(null);
+                GoalObject goalObject = Maps.environments.get(environment).getRenderers(GoalObject.class).stream().map(GoalObject.class::cast).findFirst().orElse(null);
                 DimensionBox goalDimension = DimensionBox.of(goalObject.getX(), goalObject.getY(), 32, 32);
                 if(CollisionUtils.isColliding(playerDimension, goalDimension)) {
-                    if(environment == environments.size() - 1) {
+                    if(environment == Maps.environments.size() - 1) {
                         System.out.println("You won!");
                         gameState = GameState.GAME_WON;
                         window.getSoundPlayer().stopSound("TEST"); // Stop it
@@ -129,7 +115,7 @@ public class TestGame {
                 } else if(key == KeyCode.KEY_D) {
                     player.move(Integer.parseInt(playerSpeed.getValue()), 0, true);
                 } else if(key == KeyCode.KEY_J) {
-                    if(environment == environments.size() - 1)
+                    if(environment == Maps.environments.size() - 1)
                         environment = 0;
                     screen.hide(true);
                     window.getSoundPlayer().stopSound("TEST"); // Stop it

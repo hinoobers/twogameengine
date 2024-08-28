@@ -22,8 +22,12 @@ public class Player extends GameObject {
         }
     }
 
+    public void setColor(int red, int green, int blue){
+        this.color = new Color(red, green, blue).getRGB();
+    }
+
     public void render(Graphics graphics) {
-        graphics.setColor(Color.RED);
+        graphics.setColor(new Color(color));
         graphics.fillRect(x, y, 32, 32);
     }
 }
