@@ -7,6 +7,8 @@ import org.hinoob.tge.event.MouseListener;
 import org.hinoob.tge.event.PreRenderListener;
 import org.hinoob.tge.ui.UIScreen;
 import org.hinoob.tge.ui.impl.UIButton;
+import org.hinoob.tge.ui.impl.UIInput;
+import org.hinoob.tge.ui.impl.UILabel;
 import org.hinoob.tge.util.CollisionUtils;
 import org.hinoob.tge.util.DimensionBox;
 import org.hinoob.tge.util.RandomUtils;
@@ -53,6 +55,7 @@ public class TestGame {
             }
         });
         UIScreen screen = new UIScreen(0, 0, 800, 600, Color.PINK.getRGB());
+
         UIButton startButton = new UIButton("Click me to start!", 300, 300, 100, 50, Color.GREEN.getRGB());
         startButton.setClickListener(() -> {
             System.out.println("A");
@@ -61,6 +64,14 @@ public class TestGame {
             player.move(RandomUtils.randomInt(0, 800-player.getWidth()), 0, false);
             gameState = GameState.PLAYING;
         });
+
+        UILabel label = new UILabel("Enter your speed:", 300, 200, 200, 50, Color.BLACK.getRGB());
+
+        UIInput playerSpeed = new UIInput(300, 200, 200, 50, Color.WHITE.getRGB());
+        playerSpeed.setDigitsOnly(true);
+
+        screen.addElement(playerSpeed);
+        screen.addElement(label);
         screen.addElement(startButton);
         window.attachRenderer(screen);
         window.attachListener((PreRenderListener) () -> {
@@ -115,10 +126,12 @@ public class TestGame {
             @Override
             public void onKeyPress(KeyCode key) {
                 if(key == KeyCode.KEY_A) {
-                    player.move(-6, 0, true);
+                    player.move(-Integer.parseInt(playerSpeed.getValue()), 0, true);
                 } else if(key == KeyCode.KEY_D) {
-                    player.move(6, 0, true);
+                    player.move(Integer.parseInt(playerSpeed.getValue()), 0, true);
                 } else if(key == KeyCode.KEY_J) {
+                    if(environment == environments.size() - 1)
+                        environment = 0;
                     screen.hide(true);
                     window.getSoundPlayer().stopSound("TEST"); // Stop it
                     gameState = GameState.MENU;

@@ -1,6 +1,7 @@
 package org.hinoob.tge.ui;
 
 import org.hinoob.tge.Renderer;
+import org.hinoob.tge.ui.impl.UIInput;
 import org.hinoob.tge.util.UIUtils;
 
 import java.awt.*;
@@ -46,8 +47,15 @@ public class UIScreen implements Renderer {
     @Override
     public void onMouseClick(int x, int y, int button) {
         for(UIElement element : elements) {
-            if(UIUtils.isOver(element.getX(), element.getY(), element.getWidth(), element.getHeight(), x, y)) {
-                element.onMouseClick(x, y, button);
+            element.onMouseClick(x, y, button);
+        }
+    }
+
+    @Override
+    public void keyPressed(int keyCode) {
+        for(UIElement element : elements) {
+            if(element instanceof UIInput input) {
+                input.keyPressed(keyCode);
             }
         }
     }

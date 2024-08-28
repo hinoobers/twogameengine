@@ -35,7 +35,9 @@ public class UIButton extends UIElement {
 
     @Override
     public void onMouseClick(int x, int y, int button) {
-        clickListener.onClick();
+        if(UIUtils.isOver(this.x, this.y, width, height, x, y)) {
+            clickListener.onClick();
+        }
     }
 
     public interface ClickListener {

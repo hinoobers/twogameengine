@@ -33,6 +33,12 @@ public class GamePanel extends JPanel{
                     if(KeyCode.fromKeycode(e.getKeyCode()) != null)
                         keyListener.onKeyPress(KeyCode.fromKeycode(e.getKeyCode()));
                 }
+
+                for(Renderer renderer : window.getRenderers()) {
+                    if(renderer.shouldRender()) {
+                        renderer.keyPressed(e.getKeyCode());
+                    }
+                }
             }
 
             @Override

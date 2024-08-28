@@ -10,6 +10,10 @@ public interface Renderer {
 
     }
 
+    default void keyPressed(int keyCode) {
+
+    }
+
     default boolean shouldRender() {
         return true;
     }
