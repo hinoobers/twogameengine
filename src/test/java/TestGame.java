@@ -18,23 +18,34 @@ import java.util.List;
 public class TestGame {
 
     public static Player player = new Player(50, 50);
-    public static Environment environment;
+    public static int environment = 0;
     public static List<Environment> environments = new ArrayList<>();
     private static GameState gameState = GameState.MENU;
 
     public static void main(String[] args) {
         Environment map1 = new Environment();
         map1.addRenderer(new ObstacleRow(500, 400, 800, 15));
+        map1.addRenderer(new ObstacleRow(500, 300, 800, 15));
+        map1.addRenderer(new ObstacleRow(500, 200, 800, 15));
         map1.addRenderer(new GoalObject(500, 500, 32, 32));
 
         environments.add(map1);
-        environment = environments.get(0);
+
+        Environment map2 = new Environment();
+        map2.addRenderer(new ObstacleRow(500, 400, 800, 15));
+        map2.addRenderer(new ObstacleRow(500, 300, 800, 15));
+        map2.addRenderer(new ObstacleRow(500, 200, 800, 15));
+        map2.addRenderer(new GoalObject(500, 500, 32, 32));
+
+        environments.add(map2);
+
+        environment = 0;
 
         Window window = new Window("Dropper Test Game", 800, 600);
         window.attachRenderer(graphics -> {
             player.render(graphics);
 
-            for (Renderer renderer : environment.getRenderers()) {
+            for (Renderer renderer : environments.get(environment).getRenderers()) {
                 renderer.render(graphics);
             }
         });
@@ -55,7 +66,7 @@ public class TestGame {
                 player.move(0, 3, true);
                 DimensionBox playerDimension = player.getDimensionBox();
 
-                for (ObstacleRow row : environment.getRenderers(ObstacleRow.class).stream().map(ObstacleRow.class::cast).toList()) {
+                for (ObstacleRow row : environments.get(environment).getRenderers(ObstacleRow.class).stream().map(ObstacleRow.class::cast).toList()) {
                     DimensionBox rowDimension = DimensionBox.of(0, row.getY(), 800, row.getHeight());
 
 
@@ -76,12 +87,17 @@ public class TestGame {
                     }
                 }
 
-                GoalObject goalObject = environment.getRenderers(GoalObject.class).stream().map(GoalObject.class::cast).findFirst().orElse(null);
+                GoalObject goalObject = environments.get(environment).getRenderers(GoalObject.class).stream().map(GoalObject.class::cast).findFirst().orElse(null);
                 DimensionBox goalDimension = DimensionBox.of(goalObject.getX(), goalObject.getY(), 32, 32);
                 if(CollisionUtils.isColliding(playerDimension, goalDimension)) {
-                    System.out.println("You won!");
-                    gameState = GameState.GAME_WON;
-                    window.getSoundPlayer().stopSound("TEST"); // Stop it
+                    if(environment == environments.size() - 1) {
+                        System.out.println("You won!");
+                        gameState = GameState.GAME_WON;
+                        window.getSoundPlayer().stopSound("TEST"); // Stop it
+                    } else {
+                        environment++;
+                        player.move(0, 0, false);
+                    }
                 }
 
                 if(player.getY() > 600) {
