@@ -12,7 +12,7 @@ public class ObstacleRow extends GameObject {
     public List<Integer> spaces = new ArrayList<>();
 
     public ObstacleRow(int x, int y, int width, int height, Environment currentEnv) {
-        super(x, y, width, height, currentEnv);
+        super(x, y, width, height);
 
         for(int i = 1; i < 5; i++) {
             int pixel = (int) ((Math.random() * width)/15);
