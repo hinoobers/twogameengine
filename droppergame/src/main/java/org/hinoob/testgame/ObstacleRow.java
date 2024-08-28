@@ -1,6 +1,7 @@
+package org.hinoob.testgame;
+
 import org.hinoob.tge.Environment;
 import org.hinoob.tge.GameObject;
-import org.hinoob.tge.Renderer;
 
 import java.awt.*;
 import java.util.ArrayList;

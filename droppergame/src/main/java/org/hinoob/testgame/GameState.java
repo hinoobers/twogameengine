@@ -1,3 +1,5 @@
+package org.hinoob.testgame;
+
 public enum GameState {
 
     MENU,

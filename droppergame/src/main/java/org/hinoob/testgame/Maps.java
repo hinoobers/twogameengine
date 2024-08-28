@@ -1,3 +1,5 @@
+package org.hinoob.testgame;
+
 import org.hinoob.tge.Environment;
 
 import java.util.ArrayList;

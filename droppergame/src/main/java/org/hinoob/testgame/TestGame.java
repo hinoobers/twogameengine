@@ -1,7 +1,8 @@
+package org.hinoob.testgame;
+
 import org.hinoob.tge.*;
 import org.hinoob.tge.Window;
 import org.hinoob.tge.event.KeyListener;
-import org.hinoob.tge.event.MouseListener;
 import org.hinoob.tge.event.PreRenderListener;
 import org.hinoob.tge.ui.UIScreen;
 import org.hinoob.tge.ui.impl.UIButton;
@@ -12,9 +13,6 @@ import org.hinoob.tge.util.DimensionBox;
 import org.hinoob.tge.util.RandomUtils;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class TestGame {
 

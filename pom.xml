@@ -11,6 +11,7 @@
     <modules>
         <module>networking</module>
         <module>engine</module>
+        <module>droppergame</module>
     </modules>
 
     <properties>
