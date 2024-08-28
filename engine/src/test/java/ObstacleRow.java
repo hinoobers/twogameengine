@@ -5,7 +5,6 @@ import org.hinoob.tge.Renderer;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ObstacleRow extends GameObject {
 

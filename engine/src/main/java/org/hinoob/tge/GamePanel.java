@@ -3,16 +3,17 @@ package org.hinoob.tge;
 import org.hinoob.tge.event.Listener;
 
 import javax.swing.*;
+import javax.swing.Renderer;
 import java.awt.*;
+import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Iterator;
 
 public class GamePanel extends JPanel{
 
-    private final Window window;
+    private final java.awt.Window window;
     private final Timer timer;
 
     public GamePanel(Window window) {
@@ -34,7 +35,7 @@ public class GamePanel extends JPanel{
                         keyListener.onKeyPress(KeyCode.fromKeycode(e.getKeyCode()));
                 }
 
-                for(Renderer renderer : window.getRenderers()) {
+                for(javax.swing.Renderer renderer : window.getRenderers()) {
                     if(renderer.shouldRender()) {
                         renderer.keyPressed(e.getKeyCode());
                     }
@@ -55,7 +56,7 @@ public class GamePanel extends JPanel{
                     mouseListener.onClick(e.getX(), e.getY(), e.getButton());
                 }
 
-                for(Renderer renderer : window.getRenderers()) {
+                for(javax.swing.Renderer renderer : window.getRenderers()) {
                     if(renderer.shouldRender()) {
                         renderer.onMouseClick(e.getX(), e.getY(), e.getButton());
                     }
@@ -106,8 +107,8 @@ public class GamePanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        java.util.List<Renderer> toRemove = new java.util.ArrayList<>();
-        for(Renderer renderer : window.getRenderers()) {
+        java.util.List<javax.swing.Renderer> toRemove = new java.util.ArrayList<>();
+        for(javax.swing.Renderer renderer : window.getRenderers()) {
             if(renderer.shouldDestroy()) {
                 toRemove.add(renderer);
                 continue;

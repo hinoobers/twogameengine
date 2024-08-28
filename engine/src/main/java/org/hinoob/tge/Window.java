@@ -1,10 +1,10 @@
 package org.hinoob.tge;
 
 import org.hinoob.tge.event.GameClosedListener;
-import org.hinoob.tge.event.KeyListener;
 import org.hinoob.tge.event.Listener;
 
 import javax.swing.*;
+import javax.swing.Renderer;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class Window {
     private boolean resizable = false;
     private JFrame frame;
 
-    private final List<Renderer> attachedRenderers = new ArrayList<>();
+    private final List<javax.swing.Renderer> attachedRenderers = new ArrayList<>();
     private final List<Listener> attachedListeners = new ArrayList<>();
     private final SoundPlayer soundPlayer = new SoundPlayer(this);
 
@@ -34,7 +34,7 @@ public class Window {
         this.resizable = resizable;
     }
 
-    public void attachRenderer(Renderer renderer) {
+    public void attachRenderer(javax.swing.Renderer renderer) {
         attachedRenderers.add(renderer);
     }
 

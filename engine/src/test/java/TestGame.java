@@ -14,7 +14,6 @@ import org.hinoob.tge.util.DimensionBox;
 import org.hinoob.tge.util.RandomUtils;
 
 import java.awt.*;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +67,7 @@ public class TestGame {
         UILabel label = new UILabel("Enter your speed:", 300, 200, 200, 50, Color.BLACK.getRGB());
 
         UIInput playerSpeed = new UIInput(300, 200, 200, 50, Color.WHITE.getRGB());
+        playerSpeed.setValue("5");
         playerSpeed.setDigitsOnly(true);
 
         screen.addElement(playerSpeed);
@@ -87,9 +87,7 @@ public class TestGame {
                     boolean inSpace = false;
                     for (int i = 0; i < row.spaces.size(); i++) {
                         DimensionBox DIme = DimensionBox.of(row.spaces.get(i) * 15, row.getY(), 15, row.getHeight());
-                        System.out.println(playerDimension);
                         if(CollisionUtils.isColliding(playerDimension, DIme)) {
-                            System.out.println("In space!");
                             inSpace = true;
                         }
                     }

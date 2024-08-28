@@ -4,7 +4,6 @@ import org.hinoob.tge.ui.UIElement;
 import org.hinoob.tge.util.UIUtils;
 
 import java.awt.*;
-import java.util.Random;
 
 public class UIButton extends UIElement {
 

@@ -2,7 +2,6 @@ package org.hinoob.tge.ui;
 
 import org.hinoob.tge.Renderer;
 import org.hinoob.tge.ui.impl.UIInput;
-import org.hinoob.tge.util.UIUtils;
 
 import java.awt.*;
 import java.util.ArrayList;

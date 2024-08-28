@@ -4,7 +4,6 @@ import org.hinoob.tge.ui.UIElement;
 import org.hinoob.tge.util.UIUtils;
 
 import java.awt.*;
-import java.util.Random;
 
 public class UIInput extends UIElement {
 
@@ -50,6 +49,10 @@ public class UIInput extends UIElement {
                 value += (char) keyCode;
             }
         }
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getValue() {
