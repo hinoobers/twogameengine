@@ -5,13 +5,17 @@ import java.util.List;
 
 public class Environment {
 
-    private final List<Renderer> renderers = new ArrayList<>();
+    private final List<GameObject> renderers = new ArrayList<>();
 
-    public void addRenderer(Renderer renderer) {
+    public void addRenderer(GameObject renderer) {
         renderers.add(renderer);
     }
 
-    public List<Renderer> getRenderers() {
+    public List<GameObject> getRenderers() {
         return renderers;
+    }
+
+    public List<GameObject> getRenderers(Class<?> type) {
+        return renderers.stream().filter(type::isInstance).toList();
     }
 }

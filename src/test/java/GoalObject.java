@@ -1,14 +1,12 @@
+import org.hinoob.tge.GameObject;
 import org.hinoob.tge.Renderer;
 
 import java.awt.*;
 
-public class GoalObject implements Renderer {
+public class GoalObject extends GameObject {
 
-    public int x, y;
-
-    public GoalObject(int x, int y){
-        this.x = x;
-        this.y = y;
+    public GoalObject(int x, int y, int width, int height) {
+        super(x, y, width, height);
     }
 
     @Override

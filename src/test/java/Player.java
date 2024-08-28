@@ -1,13 +1,14 @@
+import org.hinoob.tge.GameObject;
+
 import java.awt.*;
 
-public class Player {
+public class Player extends GameObject {
 
-    public int x, y;
 
-    public Player(int x, int y){
-        this.x = x;
-        this.y = y;
+    public Player(int x, int y) {
+        super(x, y, 32, 32);
     }
+
 
     public void move(int x, int y, boolean relative){
         if(relative){

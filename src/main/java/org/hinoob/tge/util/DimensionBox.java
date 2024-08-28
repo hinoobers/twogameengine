@@ -15,4 +15,14 @@ public class DimensionBox {
     public static DimensionBox of(int x, int y, int width, int height) {
         return new DimensionBox(x, y, width, height);
     }
+
+    @Override
+    public String toString() {
+        return "DimensionBox{" +
+                "x=" + x +
+                ", y=" + y +
+                ", width=" + width +
+                ", height=" + height +
+                '}';
+    }
 }

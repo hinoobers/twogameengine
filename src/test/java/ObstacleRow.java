@@ -1,19 +1,17 @@
+import org.hinoob.tge.GameObject;
 import org.hinoob.tge.Renderer;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObstacleRow implements Renderer {
+public class ObstacleRow extends GameObject {
 
-    private int width;
     public int height = 5;
     public List<Integer> spaces = new ArrayList<>();
 
-    public ObstacleRow(int width, int height) {
-        this.width = width;
-        this.height = height;
-
+    public ObstacleRow(int x, int y, int width, int height) {
+        super(x, y, width, height);
 
         for(int i = 1; i < 5; i++) {
             int pixel = (int) ((Math.random() * width)/15);
@@ -22,20 +20,21 @@ public class ObstacleRow implements Renderer {
         }
     }
 
+
     @Override
     public void render(Graphics graphics) {
         graphics.setColor(Color.BLACK);
 
         for (int i = 0; i < width; i++) {
             if (!spaces.contains(i)) {
-                graphics.fillRect(i * 15, height, 15, 15);
+                graphics.fillRect(i * 15, y, 15, height);
             }
         }
 
         graphics.setColor(Color.WHITE);
 
         for (int space : spaces) {
-            graphics.clearRect(space * 15, height, 15, 15);
+            graphics.clearRect(space * 15, y, 15, height);
         }
     }
 }

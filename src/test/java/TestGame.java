@@ -1,3 +1,4 @@
+import org.hinoob.tge.Environment;
 import org.hinoob.tge.KeyCode;
 import org.hinoob.tge.Renderer;
 import org.hinoob.tge.Window;
@@ -17,21 +18,25 @@ import java.util.List;
 public class TestGame {
 
     public static Player player = new Player(50, 50);
-    public static List<ObstacleRow> obstacleRows = new ArrayList<>();
-    public static GoalObject goalObject = new GoalObject(500, 500);
+    public static Environment environment;
+    public static List<Environment> environments = new ArrayList<>();
     private static GameState gameState = GameState.MENU;
 
     public static void main(String[] args) {
+        Environment map1 = new Environment();
+        map1.addRenderer(new ObstacleRow(500, 400, 800, 15));
+        map1.addRenderer(new GoalObject(500, 500, 32, 32));
+
+        environments.add(map1);
+        environment = environments.get(0);
+
         Window window = new Window("Dropper Test Game", 800, 600);
-        obstacleRows.add(new ObstacleRow(800, 400));
         window.attachRenderer(graphics -> {
             player.render(graphics);
 
-            for (ObstacleRow row : obstacleRows) {
-                row.render(graphics);
+            for (Renderer renderer : environment.getRenderers()) {
+                renderer.render(graphics);
             }
-
-            goalObject.render(graphics);
         });
         UIScreen screen = new UIScreen(0, 0, 800, 600, Color.PINK.getRGB());
         UIButton startButton = new UIButton("Click me to start!", 300, 300, 100, 50, Color.GREEN.getRGB());
@@ -48,13 +53,18 @@ public class TestGame {
             // Called before the rendering is done
             if(gameState == GameState.PLAYING) {
                 player.move(0, 3, true);
-                DimensionBox playerDimension = DimensionBox.of(player.x, player.y, 32,32);
-                for (ObstacleRow row : obstacleRows) {
-                    DimensionBox rowDimension = DimensionBox.of(0, row.height, 800, 15);
+                DimensionBox playerDimension = player.getDimensionBox();
+
+                for (ObstacleRow row : environment.getRenderers(ObstacleRow.class).stream().map(ObstacleRow.class::cast).toList()) {
+                    DimensionBox rowDimension = DimensionBox.of(0, row.getY(), 800, row.getHeight());
+
+
                     boolean inSpace = false;
                     for (int i = 0; i < row.spaces.size(); i++) {
-                        DimensionBox DIme = DimensionBox.of(row.spaces.get(i) * 15, row.height, 15, 15);
+                        DimensionBox DIme = DimensionBox.of(row.spaces.get(i) * 15, row.getY(), 15, row.getHeight());
+                        System.out.println(playerDimension);
                         if(CollisionUtils.isColliding(playerDimension, DIme)) {
+                            System.out.println("In space!");
                             inSpace = true;
                         }
                     }
@@ -66,14 +76,15 @@ public class TestGame {
                     }
                 }
 
-                DimensionBox goalDimension = DimensionBox.of(goalObject.x, goalObject.y, 32, 32);
+                GoalObject goalObject = environment.getRenderers(GoalObject.class).stream().map(GoalObject.class::cast).findFirst().orElse(null);
+                DimensionBox goalDimension = DimensionBox.of(goalObject.getX(), goalObject.getY(), 32, 32);
                 if(CollisionUtils.isColliding(playerDimension, goalDimension)) {
                     System.out.println("You won!");
                     gameState = GameState.GAME_WON;
                     window.getSoundPlayer().stopSound("TEST"); // Stop it
                 }
 
-                if(player.y > 600) {
+                if(player.getY() > 600) {
                     System.out.println("Game Over!");
                     gameState = GameState.GAME_OVER;
                     window.getSoundPlayer().loopSound("TEST"); // Loop it
