@@ -2,13 +2,15 @@ package org.hinoob.tge;
 
 import org.hinoob.tge.exception.PortAlreadyBoundException;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class TGEServer {
 
-    private int port;
+    private final int port;
     private ServerListener listener;
     private ServerSocket serverSocket;
     private volatile boolean running = false;
@@ -46,19 +48,22 @@ public class TGEServer {
     }
 
     private void handleClient(TGEClient client) {
-        new Thread(() -> {
-            try {
-                // Example code for client handling
-                ByteReader reader = new ByteReader(client.getInputStream());
-                while (client.isConnected()) {
-                    // Read messages from client
+        try (BufferedInputStream inputStream = new BufferedInputStream(client.getInputStream())) {
+            while (running && client.isConnected()) {
+                if (inputStream.available() > 0) {
+                    byte[] buffer = new byte[inputStream.available()];
+                    inputStream.read(buffer);
+                    ByteReader reader = new ByteReader(buffer);
                     listener.onMessage(client, reader);
+                } else {
+                    Thread.sleep(10);
                 }
-            } finally {
-                listener.onClientDisconnected(client);
-                client.close();
             }
-        }).start();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            client.close();
+        }
     }
 
     public void stop() {

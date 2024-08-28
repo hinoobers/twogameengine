@@ -28,6 +28,7 @@ public class TestGame {
             @Override
             public void onClientConnected(TGEClient client) {
                 System.out.println("Client connected!");
+                client.sendBytes(new ByteWriter(0).writeString("Hello from server!").getBytes());
             }
 
             @Override
@@ -41,9 +42,14 @@ public class TestGame {
             }
         });
 
-        TGEClient client = new TGEClient("localhost", 8080);
-
+        TGEClient client = new TGEClient("localhost", 8080, new TGEClient.ClientListener() {
+            @Override
+            public void onMessage(ByteReader reader) {
+                System.out.println("Received message from server: " + reader.readString());
+            }
+        });
         client.sendBytes(new ByteWriter(0).writeString("HEllo!").getBytes());
+
         Environment map1 = new Environment();
         map1.addRenderer(new GoalObject(500, 500, 32, 32));
         map1.addRenderer(new ObstacleRow(500, 400, 800, 15, map1));
