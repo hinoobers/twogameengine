@@ -29,6 +29,7 @@ public class UIButton extends UIElement {
         graphics.fillRect(x, y, width, height);
 
         graphics.setColor(new Color(textColor));
+        graphics.setFont(new Font("Arial", Font.PLAIN, 20));
         graphics.drawString(text, (x + width / 2) - (text.length() * 4), (y + height / 2) + 5);
     }
 

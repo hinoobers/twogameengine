@@ -44,6 +44,8 @@ public class TestGame {
 
         Window window = new Window("Dropper Test Game", 800, 600);
         window.attachRenderer(graphics -> {
+            graphics.setColor(Color.WHITE);
+            graphics.fillRect(0, 0, 800, 600);
             player.render(graphics);
 
             for (Renderer renderer : environments.get(environment).getRenderers()) {
@@ -56,7 +58,7 @@ public class TestGame {
             System.out.println("A");
             window.getSoundPlayer().stopSound("TEST"); // Stop it
             screen.hide(false);
-            player.move(RandomUtils.randomInt(0, 800), 0, false);
+            player.move(RandomUtils.randomInt(0, 800-player.getWidth()), 0, false);
             gameState = GameState.PLAYING;
         });
         screen.addElement(startButton);
@@ -97,7 +99,7 @@ public class TestGame {
                         window.getSoundPlayer().stopSound("TEST"); // Stop it
                     } else {
                         environment++;
-                        player.move(0, 0, false);
+                        player.move(RandomUtils.randomInt(0, 800-player.getWidth()), 0, false);
                     }
                 }
 
@@ -118,6 +120,7 @@ public class TestGame {
                     player.move(6, 0, true);
                 } else if(key == KeyCode.KEY_J) {
                     screen.hide(true);
+                    window.getSoundPlayer().stopSound("TEST"); // Stop it
                     gameState = GameState.MENU;
                 }
             }
@@ -132,9 +135,11 @@ public class TestGame {
             public void render(Graphics graphics) {
                 if(gameState == GameState.GAME_OVER) {
                     graphics.setColor(Color.RED);
+                    graphics.setFont(new Font("Arial", Font.BOLD, 50));
                     graphics.drawString("Game Over!", 400, 300);
                 } else if(gameState == GameState.GAME_WON) {
                     graphics.setColor(Color.GREEN);
+                    graphics.setFont(new Font("Arial", Font.BOLD, 50));
                     graphics.drawString("You won!", 400, 300);
                 }
             }

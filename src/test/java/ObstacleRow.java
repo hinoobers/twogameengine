@@ -30,11 +30,5 @@ public class ObstacleRow extends GameObject {
                 graphics.fillRect(i * 15, y, 15, height);
             }
         }
-
-        graphics.setColor(Color.WHITE);
-
-        for (int space : spaces) {
-            graphics.clearRect(space * 15, y, 15, height);
-        }
     }
 }
