@@ -8,6 +8,7 @@ public class Environment {
     private final List<GameObject> renderers = new ArrayList<>();
 
     public void addRenderer(GameObject renderer) {
+        renderer.environment = this;
         renderers.add(renderer);
     }
 

@@ -1,4 +1,6 @@
+import org.hinoob.tge.Environment;
 import org.hinoob.tge.GameObject;
+import org.hinoob.tge.TGEClient;
 
 import java.awt.*;
 

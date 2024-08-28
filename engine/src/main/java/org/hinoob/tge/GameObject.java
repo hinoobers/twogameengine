@@ -7,6 +7,7 @@ import java.awt.*;
 public class GameObject implements Renderer{
 
     protected int x, y, width, height;
+    public Environment environment;
 
     public GameObject(int x, int y, int width, int height) {
         this.x = x;

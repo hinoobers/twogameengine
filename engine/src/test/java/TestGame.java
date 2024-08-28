@@ -17,39 +17,13 @@ import java.util.List;
 
 public class TestGame {
 
-    public static Player player = new Player(50, 50);
+    public static Player player;
     public static int environment = 0;
     public static List<Environment> environments = new ArrayList<>();
     private static GameState gameState = GameState.MENU;
 
+
     public static void main(String[] args) throws Exception{
-        TGEServer server = new TGEServer(8080);
-        server.start(new TGEServer.ServerListener() {
-            @Override
-            public void onClientConnected(TGEClient client) {
-                System.out.println("Client connected!");
-                client.sendBytes(new ByteWriter(0).writeString("Hello from server!").getBytes());
-            }
-
-            @Override
-            public void onClientDisconnected(TGEClient client) {
-                System.out.println("Client disconnected!");
-            }
-
-            @Override
-            public void onMessage(TGEClient client, ByteReader reader) {
-                System.out.println("Received message from client: " + reader.readString());
-            }
-        });
-
-        TGEClient client = new TGEClient("localhost", 8080, new TGEClient.ClientListener() {
-            @Override
-            public void onMessage(ByteReader reader) {
-                System.out.println("Received message from server: " + reader.readString());
-            }
-        });
-        client.sendBytes(new ByteWriter(0).writeString("HEllo!").getBytes());
-
         Environment map1 = new Environment();
         map1.addRenderer(new GoalObject(500, 500, 32, 32));
         map1.addRenderer(new ObstacleRow(500, 400, 800, 15, map1));
@@ -67,6 +41,8 @@ public class TestGame {
         environments.add(map2);
 
         environment = 0;
+
+        player = new Player(50, 50);
 
         Window window = new Window("Dropper Test Game", 800, 600);
         window.attachRenderer(graphics -> {

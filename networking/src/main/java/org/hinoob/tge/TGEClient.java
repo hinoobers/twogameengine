@@ -7,7 +7,6 @@ import java.net.Socket;
 
 public class TGEClient {
 
-    private int id;
     private Socket socket;
     private ClientListener listener;
     private volatile boolean running = false;
