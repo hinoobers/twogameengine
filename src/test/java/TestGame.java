@@ -9,6 +9,7 @@ import org.hinoob.tge.ui.UIScreen;
 import org.hinoob.tge.ui.impl.UIButton;
 import org.hinoob.tge.util.CollisionUtils;
 import org.hinoob.tge.util.DimensionBox;
+import org.hinoob.tge.util.RandomUtils;
 
 import java.awt.*;
 import java.security.Key;
@@ -55,7 +56,7 @@ public class TestGame {
             System.out.println("A");
             window.getSoundPlayer().stopSound("TEST"); // Stop it
             screen.hide(false);
-            player.move(0, 0, false);
+            player.move(RandomUtils.randomInt(0, 800), 0, false);
             gameState = GameState.PLAYING;
         });
         screen.addElement(startButton);
