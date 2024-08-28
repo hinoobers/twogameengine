@@ -25,18 +25,18 @@ public class TestGame {
 
     public static void main(String[] args) {
         Environment map1 = new Environment();
-        map1.addRenderer(new ObstacleRow(500, 400, 800, 15));
-        map1.addRenderer(new ObstacleRow(500, 300, 800, 15));
-        map1.addRenderer(new ObstacleRow(500, 200, 800, 15));
         map1.addRenderer(new GoalObject(500, 500, 32, 32));
+        map1.addRenderer(new ObstacleRow(500, 400, 800, 15, map1));
+        map1.addRenderer(new ObstacleRow(500, 300, 800, 15, map1));
+        map1.addRenderer(new ObstacleRow(500, 200, 800, 15, map1));
 
         environments.add(map1);
 
         Environment map2 = new Environment();
-        map2.addRenderer(new ObstacleRow(500, 400, 800, 15));
-        map2.addRenderer(new ObstacleRow(500, 300, 800, 15));
-        map2.addRenderer(new ObstacleRow(500, 200, 800, 15));
         map2.addRenderer(new GoalObject(500, 500, 32, 32));
+        map2.addRenderer(new ObstacleRow(500, 400, 800, 15, map2));
+        map2.addRenderer(new ObstacleRow(500, 300, 800, 15, map2));
+        map2.addRenderer(new ObstacleRow(500, 200, 800, 15, map2));
 
         environments.add(map2);
 
@@ -66,7 +66,7 @@ public class TestGame {
         window.attachListener((PreRenderListener) () -> {
             // Called before the rendering is done
             if(gameState == GameState.PLAYING) {
-                player.move(0, 3, true);
+                player.move(0, 3, true); // Gravity
                 DimensionBox playerDimension = player.getDimensionBox();
 
                 for (ObstacleRow row : environments.get(environment).getRenderers(ObstacleRow.class).stream().map(ObstacleRow.class::cast).toList()) {

@@ -1,16 +1,18 @@
+import org.hinoob.tge.Environment;
 import org.hinoob.tge.GameObject;
 import org.hinoob.tge.Renderer;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ObstacleRow extends GameObject {
 
     public int height = 5;
     public List<Integer> spaces = new ArrayList<>();
 
-    public ObstacleRow(int x, int y, int width, int height) {
+    public ObstacleRow(int x, int y, int width, int height, Environment currentEnv) {
         super(x, y, width, height);
 
         for(int i = 1; i < 5; i++) {
@@ -18,6 +20,10 @@ public class ObstacleRow extends GameObject {
             spaces.add(pixel);
             spaces.add(pixel + 1);
         }
+
+        GoalObject goal = currentEnv.getRenderers(GoalObject.class).stream().map(d -> (GoalObject)d).toList().get(0);
+        spaces.add(goal.getX()/15);
+        spaces.add(goal.getX()/15 + 1);
     }
 
 
