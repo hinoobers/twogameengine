@@ -1,6 +1,8 @@
 "Good" game engine
 
 I have coded two games on it to test the functionality.
+I am still looking on improving the engine as in reconstructing it, so no documentation for it yet.
+Examples are the two below games (Dropper, Snake)
 
 <h3>Dropper</h3>
 Inspired by my Sprig game, fall down & avoid obstacles to get to the gold block
